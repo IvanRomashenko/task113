@@ -1,8 +1,7 @@
 package jm.task.core.jdbc.dao;
 
-import jm.task.core.jdbc.exception.DaoException;
 import jm.task.core.jdbc.model.User;
-import jm.task.core.jdbc.util.ConnectionUser;
+import jm.task.core.jdbc.util.Util;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
-    Connection connection = ConnectionUser.connection();
+    private static final Connection connection = Util.connection();
     private static final String CREATE_TABLE_SQL =
-            "CREATE TABLE IF NOT EXISTS user (id bigint primary key auto_increment," +
-                    " name varchar(255), lastName varchar(255),age smallint)";
+            "CREATE TABLE IF NOT EXISTS user (id BIGINT PRIMARY KEY AUTO_INCREMENT," +
+                    " name VARCHAR(128), lastName VARCHAR(128),age SMALLINT)";
     private static final String DROP_TABLE_SQL = "DROP TABLE IF EXISTS user";
     private static final String INSERT_USER_SQL =
             "INSERT INTO user (name, lastName, age) VALUES (?, ?, ?)";
@@ -32,15 +31,14 @@ public class UserDaoJDBCImpl implements UserDao {
             connection.setAutoCommit(false);
             ps.executeUpdate();
             connection.commit();
+            System.out.println("Table created");
         } catch (SQLException e) {
-            if (connection != null) {
-                try {
-                    connection.rollback();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
             }
-            throw new DaoException(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -49,15 +47,14 @@ public class UserDaoJDBCImpl implements UserDao {
             connection.setAutoCommit(false);
             ps.executeUpdate();
             connection.commit();
+            System.out.println("Table delete");
         } catch (SQLException e) {
-            if (connection != null) {
-                try {
-                    connection.rollback();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
             }
-            throw new DaoException(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -69,15 +66,14 @@ public class UserDaoJDBCImpl implements UserDao {
             ps.setByte(3, age);
             ps.executeUpdate();
             connection.commit();
+            System.out.println("User with name " + name + " add to database");
         } catch (SQLException e) {
-            if (connection != null) {
-                try {
-                    connection.rollback();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
             }
-            throw new DaoException(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -87,15 +83,14 @@ public class UserDaoJDBCImpl implements UserDao {
             ps.setLong(1, id);
             ps.executeUpdate();
             connection.commit();
+            System.out.println("User with id " + id + " removed from database");
         } catch (SQLException e) {
-            if (connection != null) {
-                try {
-                    connection.rollback();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
             }
-            throw new DaoException(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -114,14 +109,12 @@ public class UserDaoJDBCImpl implements UserDao {
             }
             connection.commit();
         } catch (SQLException e) {
-            if (connection != null) {
-                try {
-                    connection.rollback();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
             }
-            throw new DaoException(e);
+            throw new RuntimeException(e);
         }
         return users;
     }
@@ -131,15 +124,14 @@ public class UserDaoJDBCImpl implements UserDao {
             connection.setAutoCommit(false);
             ps.executeUpdate();
             connection.commit();
+            System.out.println("Table cleaned");
         } catch (SQLException e) {
-            if (connection != null) {
-                try {
-                    connection.rollback();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
             }
-            throw new DaoException(e);
+            throw new RuntimeException(e);
         }
     }
 }
