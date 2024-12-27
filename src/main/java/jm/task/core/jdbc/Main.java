@@ -14,15 +14,18 @@ public class Main {
     private static final User user4 = new User("name4", "lastName4", (byte) 4);
 
     public static void main(String[] args) {
-//        userService.createUsersTable();
-//        userService.dropUsersTable();
+        userService.createUsersTable();
+
         userService.saveUser(user1.getName(), user1.getLastName(), user1.getAge());
         userService.saveUser(user2.getName(), user2.getLastName(), user2.getAge());
         userService.saveUser(user3.getName(), user3.getLastName(), user3.getAge());
         userService.saveUser(user4.getName(), user4.getLastName(), user4.getAge());
-        userService.removeUserById(2);
-        List<User> users = userService.getAllUsers();
-        users.forEach(System.out::println);
-//        userService.cleanUsersTable();
+
+        userService.getAllUsers();
+
+        userService.cleanUsersTable();
+
+        userService.dropUsersTable();
+
     }
 }

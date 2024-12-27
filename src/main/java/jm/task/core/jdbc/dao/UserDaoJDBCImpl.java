@@ -31,7 +31,6 @@ public class UserDaoJDBCImpl implements UserDao {
             connection.setAutoCommit(false);
             ps.executeUpdate();
             connection.commit();
-            System.out.println("Table created");
         } catch (SQLException e) {
             try {
                 connection.rollback();
@@ -47,7 +46,6 @@ public class UserDaoJDBCImpl implements UserDao {
             connection.setAutoCommit(false);
             ps.executeUpdate();
             connection.commit();
-            System.out.println("Table delete");
         } catch (SQLException e) {
             try {
                 connection.rollback();
@@ -66,7 +64,6 @@ public class UserDaoJDBCImpl implements UserDao {
             ps.setByte(3, age);
             ps.executeUpdate();
             connection.commit();
-            System.out.println("User with name " + name + " add to database");
         } catch (SQLException e) {
             try {
                 connection.rollback();
@@ -83,7 +80,6 @@ public class UserDaoJDBCImpl implements UserDao {
             ps.setLong(1, id);
             ps.executeUpdate();
             connection.commit();
-            System.out.println("User with id " + id + " removed from database");
         } catch (SQLException e) {
             try {
                 connection.rollback();
@@ -124,7 +120,6 @@ public class UserDaoJDBCImpl implements UserDao {
             connection.setAutoCommit(false);
             ps.executeUpdate();
             connection.commit();
-            System.out.println("Table cleaned");
         } catch (SQLException e) {
             try {
                 connection.rollback();
